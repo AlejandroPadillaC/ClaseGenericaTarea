@@ -71,20 +71,18 @@ public class FirebaseSaveObject {
      * @throws java.io.FileNotFoundException
      */
     
-    public <T, U> void saveFree(HashMap<Pair<T,U>, Pair<T,U>> map)throws FileNotFoundException{
+    public <T,U> void saveFree(HashMap map)throws FileNotFoundException{
         save(map);
     }
     
-    public <T,U> void deleteFree(Pair <T,U> info, Pair <T,U> eps) throws FileNotFoundException{
-        delete(info, eps);
-    }
-    public <T, U> void save(HashMap<Pair<T, U>, Pair<T, U>> map) {
+    public <T, U> void save(HashMap map) {
         if (map != null && !map.isEmpty()) {
 
             // Obtener la referencia raíz de la base de datos
             DatabaseReference databaseReference = firebaseDatabase.getReference("/");
-
-            for (Map.Entry<Pair<T, U>, Pair<T, U>> entry : map.entrySet()) {
+            System.out.println("Llaves" + map.keySet());
+            
+            /*for (Map.Entry<Pair<T, U>, Pair<T, U>> entry : map.entrySet()) {
                 Pair<T, U> key = entry.getKey();
                 Pair<T, U> value = entry.getValue();
 
@@ -107,28 +105,7 @@ public class FirebaseSaveObject {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
-            }
-        }
-    }
-    
-    private <T,U> void delete(Pair <T,U> info, Pair<T,U> eps) throws FileNotFoundException{
-        if (info != null) {
-            DatabaseReference databaseReference = firebaseDatabase.getReference("/");
-            DatabaseReference childReference = databaseReference.child(info.toString());
-            CountDownLatch countDownLatch = new CountDownLatch(1);
-            //En esta linea se utiliza un metodo de la libreria de firebase para eliminar o poner un valor. 
-            childReference.removeValue(new DatabaseReference.CompletionListener() {
-
-                @Override
-                public void onComplete(DatabaseError de, DatabaseReference dr) {
-                    countDownLatch.countDown();
-                }
-            });
-            try {
-                countDownLatch.await();
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
+            }*/
         }
     }
 }
